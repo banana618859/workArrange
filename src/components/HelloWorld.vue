@@ -3,12 +3,12 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-04-17 21:45:42
+ * @LastEditTime: 2021-04-17 22:56:13
 -->
 <template>
   <div class="hello" style="height: 100vh; text-align:left; display: flex; flex-direction: column;">
     <h1>{{ msg }}</h1>
-    <div style="height: 160px;">
+    <div style="height: 110px;">
       <div style="width:32%; border: 1px solid #ccc; float: left; ">
       <div>人员名单：</div>
       <textarea style="width:100%" v-model="atext"></textarea>
@@ -35,7 +35,7 @@
       <el-table-column prop="carArr" label="服务列车">
         <template slot-scope="scope">
           <p v-for="(item,index) in scope.row.carArr" :key="item.name+index">
-            {{item.name}}:{{item.timeText}}
+            {{item.name}}:{{item.timeText}}<span style="color:red" v-if="item.special">特殊</span>
           </p>
         </template>
       </el-table-column>
@@ -53,11 +53,12 @@ export default {
   },
   data(){
     return{
+      count: 4,
       hour: 1000*60*60,
       delay: 2,
       atext: '用户1,用户2,用户3,用户4,用户5,用户6,用户7,用户8',
       btext: '车1,车2,车3,车4,车5,车6,车7,车8,车9,车10,车11,车12,车13,车14,车15,车16,车17,车18,车19,车20,车21,车22,车23,车24,车25,车26,车27,车28,车29,车30,车31,车32',
-      ctext: '2021/4/17 0:15,2021/4/17 0:30,2021/4/17 0:45,2021/4/17 1:00,2021/4/17 1:15,2021/4/17 1:30,2021/4/17 1:45,2021/4/17 2:00,2021/4/17 2:15,2021/4/17 2:30,2021/4/17 2:45,2021/4/17 3:00,2021/4/17 3:15,2021/4/17 3:30,2021/4/17 3:45,2021/4/17 4:00,2021/4/17 4:15,2021/4/17 4:30,2021/4/17 4:45,2021/4/17 5:00,2021/4/17 5:15,2021/4/17 5:30,2021/4/17 5:45,2021/4/17 6:00,2021/4/17 6:15,2021/4/17 6:30,2021/4/17 6:45,2021/4/17 7:00,2021/4/17 7:15,2021/4/17 7:30,2021/4/17 7:45,2021/4/17 8:00',
+      ctext: '2021/4/17 20:54,2021/4/17 21:17,2021/4/17 21:19,2021/4/17 22:12,2021/4/17 22:17,2021/4/17 22:20,2021/4/17 22:37,2021/4/17 22:50,2021/4/17 23:21,2021/4/17 23:24,2021/4/17 23:55,2021/4/18 00:25,2021/4/18 00:25,2021/4/18 00:39,2021/4/18 00:44,2021/4/18 00:53,2021/4/18 00:53,2021/4/18 00:58,2021/4/18 01:10,2021/4/18 02:32,2021/4/18 03:37,2021/4/18 03:57,2021/4/18 04:27',
       allPerson: [],
       allCar:[],
       finishArr: [],
@@ -72,8 +73,13 @@ export default {
       var carName = this.btext.split(',')
       var carTime = this.ctext.split(',')
       console.log('start',personArr,carName,carTime);
+      this.count = parseInt(carTime.length/personArr.length)
+      if(carTime.length%personArr.length){
+        this.count++
+      }
+      // this.count++
       var carArr=[]
-      for(let i=0;i<carName.length;i++){
+      for(let i=0;i<carTime.length;i++){
         carArr.push({
           name: carName[i],
           timeText: carTime[i],
@@ -85,9 +91,9 @@ export default {
       for(let i=0;i<carArr.length;i++){
         this.personIndex=0
         await this.pipei(personArr,carArr[i])
-        console.log('car:',i,carArr[i].name);
+        console.log('car:',i+1,carArr[i].name);
       }
-      console.log('最后结果',this.finishArr);
+      console.log('最后结果',this.count,this.finishArr);
     },
     pipei(personArr,car){
       return new Promise(async (resolve,reject)=>{
@@ -109,7 +115,7 @@ export default {
           let firstOne = this.finishArr[this.personIndex]
           let carLen = firstOne.carArr.length;
           let lastCarTime = firstOne.carArr[carLen-1].time
-          if(firstOne.carArr.length<4 && !(lastCarTime+this.delay*this.hour > car.time)){
+          if(firstOne.carArr.length< this.count && !(lastCarTime+this.delay*this.hour > car.time)){
             // 分配车给他
             firstOne.carArr.push(car)
             resolve()
@@ -140,7 +146,7 @@ export default {
           let firstOne = this.finishArr[this.personIndex]
           let carLen = firstOne.carArr.length;
           let lastCarTime = firstOne.carArr[carLen-1].time
-          if(firstOne.carArr.length<4 && !(lastCarTime+this.delay*this.hour > car.time)){
+          if(firstOne.carArr.length<this.count && !(lastCarTime+this.delay*this.hour > car.time)){
             // 分配车给他
             firstOne.carArr.push(car)
             resolve()
@@ -148,8 +154,22 @@ export default {
           else{
             // 再考虑第二人
             this.personIndex++
-            await this.loopFenPei(personArr,car)
-            resolve()
+            // 没人可分配了
+            if(!personArr[this.personIndex]){
+              var arr = this.finishArr;
+              for(let i=0;i<arr.length;i++){
+                if(arr[i].carArr.length<this.count){
+                  car['special']=true
+                  arr[i].carArr.push(car)
+                  break;
+                  
+                }
+              }
+              resolve()
+            }else{
+              await this.loopFenPei(personArr,car)
+              resolve()
+            }
           }
         }
       })
@@ -164,7 +184,7 @@ export default {
   box-sizing: border-box;
 }
 textarea{
-  height: 130px;
+  height: 80px;
 }
 h3 {
   margin: 40px 0 0;
