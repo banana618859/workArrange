@@ -1,9 +1,17 @@
+<!--
+ * @Descripttion: 
+ * @Author: yizheng.yuan
+ * @Date: 2021-04-17 18:35:51
+ * @LastEditors: yizheng.yuan
+ * @LastEditTime: 2021-04-19 12:05:11
+-->
 <template>
   <div id="app">
-    <!-- <div id="nav">
+    <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+      <router-link to="/about">About</router-link>|
+      <router-link to="/right">Right</router-link>
+    </div>
     <router-view/>
   </div>
 </template>

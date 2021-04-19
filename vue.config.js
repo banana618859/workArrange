@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2020-10-25 22:57:53
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-04-10 17:33:42
+ * @LastEditTime: 2021-04-18 12:03:29
  */
 var isPro = process.env.NODE_ENV === 'production';
 // 引入jq需要加入以下代码
@@ -35,9 +35,17 @@ module.exports = {
     open: true,
     host: 'localhost',
     port: 8000,
-    https: false,
+    https: true,
     //以上的ip和端口是我们本机的;下面为需要跨域的
     proxy: {//配置跨域
+      '/zzz':{
+        target: 'https://api.oick.cn/txt/',
+        ws: true,
+        changOrigin: true,//允许跨域
+        pathRewrite: {
+          '^/zzz': ''//请求的时候使用这个api就可以
+        }
+      },
       '/api': {
         target: 'http://47.105.90.67:7070/',//这里后台的地址模拟的;应该填写你们真实的后台接口
         // target: 'http://localhost:7070/',

@@ -3,3 +3,118 @@
   padding: 0;
   margin: 0;
 }
+
+.oneMenu{
+  width:32%; float:left;margin-left:1%;
+}
+.sonMenu{
+  width:48%; float:left;margin-left:1%;
+}
+
+.mg-t20{
+  margin-top: 20px;
+}
+
+.pd-t10-b20{
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.pd-lr10{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.pd-t2-l10{
+  padding: 2px 10px;
+}
+
+.textL{
+  text-align: left;
+}
+
+/* reset */
+*{box-sizing: border-box;padding: 0; margin: 0; list-style: none;}
+
+.wrapBox{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+.h50{
+  height: 50px; line-height: 50px; font-size: 16px; padding:0 10px; text-align: left;
+  margin-bottom: 5px;
+}
+
+.pd10{
+  padding: 10px;
+}
+.pd-lr10{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.pd-l10{
+  padding-left:10px;
+}
+.pd-10{
+  padding-bottom:10px;
+
+}
+.mg-b5{
+  margin-bottom: 5px;
+}
+.vCenter{
+  display: flex;
+  align-items: center;
+}
+
+
+/* 字体 */
+.font12{
+  font-size: 12px;
+}
+
+.myDialog .el-dialog{
+  border-radius: 5px;
+  overflow: hidden;
+}
+.myDialog .el-dialog__body{
+  padding: 10px;
+  
+}
+
+.blueHead .el-dialog__header{
+  /* background-color: #9eaab7; */
+  background-color: #5eb198;
+  
+}
+.blueHead .el-dialog__title{
+  font-size: 16px;
+  color:#fff;
+}
+.blueHead .el-dialog__close{
+  color:#fff;
+}
+.el-dialog__header{
+  padding: 10px;
+}
+.radius_tl5{
+  border-top-left-radius: 5px;
+}
+.radius_bl5{
+  border-bottom-left-radius: 5px;
+}
+.radius_tbl5{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.hand{
+  cursor: pointer;
+}
+.myBlue{
+  color: #409EFF;
+}
+.redColor,.myRed{
+  color: #f73f3f;
+}
