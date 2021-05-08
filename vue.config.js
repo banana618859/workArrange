@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2020-10-25 22:57:53
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-04-18 12:03:29
+ * @LastEditTime: 2021-05-08 08:53:58
  */
 var isPro = process.env.NODE_ENV === 'production';
 // 引入jq需要加入以下代码
@@ -35,7 +35,7 @@ module.exports = {
     open: true,
     host: 'localhost',
     port: 8000,
-    https: true,
+    https: false,
     //以上的ip和端口是我们本机的;下面为需要跨域的
     proxy: {//配置跨域
       '/zzz':{

@@ -3,14 +3,14 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-04-19 12:05:11
+ * @LastEditTime: 2021-05-08 08:55:00
 -->
 <template>
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
-      <router-link to="/right">Right</router-link>
+      <router-link to="/right">权限</router-link>
     </div>
     <router-view/>
   </div>
