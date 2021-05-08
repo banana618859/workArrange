@@ -3,11 +3,13 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-19 11:30:56
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-06 18:05:27
+ * @LastEditTime: 2021-05-08 09:31:01
 -->
 <template>
   <div>
-    <p class="textL pageTitle" style="margin-bottom: 10px">
+    <p class="pageTitle" style="margin-bottom: 10px">权限管理模块</p>
+    
+    <p class="textL" style="margin-bottom: 10px;padding: 0 20px;">
       角色列表：<el-button @click="addRole" size="mini" type="primary"
         >增加角色</el-button
       >
@@ -522,7 +524,12 @@ export default {
       this.showRight = true;
       this.isAdd = true;
     },
-    delRow(row){
+    async delRow(row){
+      let rel = await this.answerFun();
+      if(!rel){
+        // 点击了取消
+        return
+      }
       for (let i = 0; i < this.allRole.length; i++) {
         if (this.allRole[i].name == row.name) {
           this.allRole.splice(i,1)
@@ -537,6 +544,7 @@ export default {
 
 <style scoped>
 .pageTitle {
+  font-size: 18px;
   background: #91ccb1;
   height: 40px;
   line-height: 40px;
