@@ -3,6 +3,54 @@
   padding: 0;
   margin: 0;
 }
+.fl{float: left;}
+.fr{float: right;}
+
+
+.flexBox-r{
+  display: flex;
+}
+.flexBox-c{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.top-title{
+  margin-top: 10px;
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  font-size: 16px;
+  padding: 0 10px;
+}
+.flex1{
+  flex: 1;
+}
+.grap-box{
+  border-radius: 5px;
+  background-color: #ddd;
+  padding: 10px;
+}
+
+.mydialog .el-dialog__header {
+	padding: 15px 20px 10px;
+  text-align: left;
+}
+.mydialog .el-dialog__body {
+	padding: 0 20px 1px;
+}
+.mydialog .dialog-footer {
+	padding: 10px 5px;
+	overflow: hidden;
+}
+.el-dialog{
+  margin: 0 auto;
+}
+
+.el-menu{
+  border: none;
+}
+
 
 .oneMenu{
   width:32%; float:left;margin-left:1%;

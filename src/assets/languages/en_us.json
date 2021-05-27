@@ -1,0 +1,40 @@
+{
+  "common":{
+    "add": "add",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "update": "update",
+    "delete": "delete",
+    "edit": "edit",
+    "notNull": "Can not null!",
+    "pleaseInputKeyword":"Please input keyword",
+    "pleaseSelectDate": "Please select date",
+    "expire": "expire",
+    "instrumentManager": "Instrument manager",
+    "productManager": "Product manager",
+    "orderManager": "Order manager",
+    "oldManager": "Old manager",
+    "rightManager": "Right manager",
+    "otherManager": "Other manager",
+    "compManager": "Component manager",
+    "operate": "Operate"
+  },
+  "instrument":{
+    "instrumentManager": "Instrument manager",
+    "id": "id",
+    "name": "name",
+    "typeNumber": "typeNumber",
+    "expire": "expire"
+  },
+  "product":{
+    "typeNumber": "Type number",
+    "testProject": "Test project",
+    "matterNumber": "Matter number",
+    "testSOP":"Test SOP",
+    "fixPath":"Fix path",
+    "testAssest": "Test assest",
+    "technologicalProcess":"Technological process",
+    "technologicalProcessFile":"Technological process file",
+    "assembleSOP":"Assemble SOP"
+  }
+}

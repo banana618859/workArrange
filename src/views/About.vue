@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-04-18 15:02:35
+ * @LastEditTime: 2021-05-24 17:50:32
 -->
 <template>
   <div class="about">
@@ -15,6 +15,21 @@
 
       <video ref="myVideo" autoplay="autoplay" :src="url"></video>
 <!-- 原文链接：https://blog.csdn.net/qq_40713392/article/details/94782292 -->
+
+    <div style="border: 1px solid red; margin: 15px;">
+      <p>mockjs使用</p>
+      <el-table
+        :data="taData" border size="mini" style="flex: 1;width: 100%;">
+        <el-table-column
+        type="index"
+        width="50"></el-table-column>
+        <el-table-column prop="id" label="id" width="400"></el-table-column>
+        <el-table-column prop="name" label="名称"></el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="job" label="工作"></el-table-column>
+      </el-table>
+
+    </div>
   </div>
 </template>
 
@@ -27,7 +42,8 @@
         url: '',
         text: 'text=',
         other: ';spd=1',
-        tempUrl: ''
+        tempUrl: '',
+        taData: []
 
       }
     },
@@ -35,6 +51,7 @@
       let keyWork = this.text+this.word
       this.url=this.baseUrl + keyWork;
       console.log('this.url',this.url);
+      this.getData()
     },
     watch:{
       word(n,o){
@@ -44,6 +61,15 @@
       }
     },
     methods:{
+      
+      getData(){
+        this.taData=[]
+        this.$axios.get('/parameter/query')
+        .then(res => {
+          console.log('res',res);
+          this.taData = res.data.data.rows
+        })
+      },
       readWord(){
         this.url = this.tempUrl;
         // var myVideo = document.getElementsByTagName('video')[0];

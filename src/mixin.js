@@ -4,20 +4,50 @@
  * @Author: yizheng.yuan
  * @Date: 2021-05-08 09:10:17
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-08 09:19:00
+ * @LastEditTime: 2021-05-26 11:34:30
  */
 export default {
-  methods:{
-    answerFun(text='确定删除?'){
-      return new Promise((resolve,reject)=>{
+  methods: {
+    copyObj(obj) {
+      return JSON.parse(JSON.stringify(obj))
+    },
+    // 毫数转格式 【yyyy-MM-dd】
+    formatDate(time, format='yyyy-MM-dd HH:mm:ss') {
+      const t = new Date(time);
+      const tf = function (i) { return (i < 10 ? '0' : '') + i; };
+      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+        switch (a) {
+          case 'yyyy':
+            return tf(t.getFullYear());
+          // break;
+          case 'MM':
+            return tf(t.getMonth() + 1);
+          // break;
+          case 'mm':
+            return tf(t.getMinutes());
+          // break;
+          case 'dd':
+            return tf(t.getDate());
+          // break;
+          case 'HH':
+            return tf(t.getHours());
+          // break;
+          case 'ss':
+            return tf(t.getSeconds());
+          // break;
+        };
+      });
+    },
+    answerFun(text = '确定删除?') {
+      return new Promise((resolve, reject) => {
         this.$confirm(text, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            resolve(true)
-          }).catch(() => {
-            resolve(false)        
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          resolve(true)
+        }).catch(() => {
+          resolve(false)
         })
       })
     }

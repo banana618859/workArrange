@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-19 11:30:56
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-08 09:31:01
+ * @LastEditTime: 2021-05-08 23:13:06
 -->
 <template>
   <div>
@@ -97,7 +97,7 @@ export default {
       isAdd: true,
       showRight: false,
       baseRole: {
-        name: "",
+        name: "经理",
         allRight: [
           {
             name: "用户权限管理",
@@ -368,6 +368,7 @@ export default {
           }
         }
       }
+      // JSON.stringify(allFa)
       let realFa = JSON.parse(JSON.stringify(allFa))
       // console.error('realFa',realFa);
       if (!status && allFa.length) {
