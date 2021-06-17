@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-27 19:07:09
+ * @LastEditTime: 2021-06-16 14:39:01
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -19,11 +19,18 @@ import Product from '../components/product.vue'
 // 订单管理
 import Order from '../components/order.vue'
 
+// 组装管理
+import Assemble from '../components/assemble.vue'
+Assemble
 // 老化管理
 import Old from '../components/old.vue'
 
 // 组件管理
 import Comp from '../components/comp.vue'
+
+
+// 组件管理
+import Upload from '../components/Upload.vue'
 
 Vue.use(VueRouter);
 
@@ -58,6 +65,14 @@ const routes = [
         }
       },
       {
+        path: '/assemble',
+        name: 'assemble',
+        component: Assemble,
+        meta:{
+          name: 'common.assemble'
+        }
+      },
+      {
         path: '/old',
         name: 'old',
         component: Old,
@@ -88,6 +103,15 @@ const routes = [
         component: About,
         meta:{
           name: 'common.otherManager',
+          faName: 'common.rightManager'
+        },
+      },
+      {
+        path: '/upload',
+        name: 'upload',
+        component: Upload,
+        meta:{
+          name: 'common.upload',
           faName: 'common.rightManager'
         },
       }

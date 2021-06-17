@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-26 18:51:33
+ * @LastEditTime: 2021-06-16 16:34:07
 -->
 <template>
   <div class="flexBox-c pd10">
@@ -23,51 +23,59 @@
         "
         style="width: 100%"
       >
-        <el-table-column :label="$t('product.typeNumber')" prop="id" width="140px">
+        <el-table-column
+          :label="$t('product.typeNumber')"
+          prop="typeNumber"
+          width="140px"
+        >
         </el-table-column>
         <el-table-column
           :label="$t('product.testProject')"
-          prop="name"
+          prop="testProject"
         ></el-table-column>
         <el-table-column
           :label="$t('product.matterNumber')"
-          prop="typeNumber"
+          prop="matterNumber"
         ></el-table-column>
-        <el-table-column
-          :label="$t('product.testSOP')"
-          prop="expire"
-        >
-          <template slot-scope="scope">
-            <span class="myRed" v-if="scope.row.expire < Date.now()">
-              {{$t('common.expire')}}
-            </span>
-            <span v-else>{{ formatter(scope.row.expire)}}</span>
+        <el-table-column :label="$t('product.testSOP')" prop="testSOP">
+          <template v-slot="scope">
+            <span class="hand myBlue" @click="lookTestSOP(scope.row)">{{$t('common.see')}}</span>
           </template>
         </el-table-column>
 
         <el-table-column
           :label="$t('product.fixPath')"
-          prop="typeNumber"
+          prop="fixPath"
         ></el-table-column>
         <el-table-column
-          :label="$t('product.testAssest')"
-          prop="typeNumber"
-        ></el-table-column>
+          :label="$t('product.testAsset')"
+          prop="testAsset"
+        >
+          <template v-slot="scope">
+            <span class="hand myBlue" @click="lookTestAsset(scope.row)">{{$t('common.see')}}</span>
+            <span class="hand myBlue mg-l10" @click="exportTestAsset(scope.row)">{{$t('common.export')}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :label="$t('product.technologicalProcess')"
-          prop="typeNumber"
-        ></el-table-column>
+          prop="technologicalProcess">
+          <template v-slot="scope">
+            <span class="hand myBlue" @click="lookTechProcess(scope.row)">{{$t('common.see')}}</span>
+          </template>
+          </el-table-column>
         <el-table-column
           :label="$t('product.technologicalProcessFile')"
-          prop="typeNumber"
+          prop="technologicalProcessFile"
         ></el-table-column>
         <el-table-column
           :label="$t('product.assembleSOP')"
-          prop="typeNumber"
-        ></el-table-column>
+          prop="assembleSOP">
+        <template v-slot="scope">
+            <span class="hand myBlue" @click="lookAssembleSOP(scope.row)">{{$t('common.see')}}</span>
+          </template>
+        </el-table-column>
 
-        <el-table-column :label="$t('common.operate')">
-          
+        <el-table-column width="160px" :label="$t('common.operate')">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -91,8 +99,7 @@
       :top="dialog_topStr"
       :visible.sync="showAdd"
       :close-on-click-modal="false"
-      width="40%"
-    >
+      width="40%">
       <div
         class="grap-box"
         style="overflow: auto"
@@ -102,34 +109,72 @@
           ref="formName"
           :rules="rules"
           :model="form"
-          label-width="100px"
+          label-width="120px"
+          size="mini"
         >
-          <el-form-item :label="$t('product.id')" prop="id">
-            <el-input
-              size="small"
-              v-model="form.id"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('product.name')" prop="name">
-            <el-input size="small" v-model="form.name"></el-input>
-          </el-form-item>
           <el-form-item :label="$t('product.typeNumber')" prop="typeNumber">
             <el-input size="small" v-model="form.typeNumber"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('product.expire')" prop="expire">
-            <el-date-picker
-              style="width: 100%"
-              v-model="form.expire"
-              size="small"
-              type="datetime"
-              :placeholder="$t('common.pleaseSelectDate')"
-              align="right"
-              value-format="timestamp"
-              :picker-options="pickerOptions"
-            >
-            </el-date-picker>
+          <el-form-item :label="$t('product.matterNumber')" prop="matterNumber">
+            <el-input size="small" v-model="form.matterNumber"></el-input>
           </el-form-item>
+          <el-form-item :label="$t('product.testProject')" prop="testProject">
+            <el-input placeholder="请选择路径" v-model="form.testProject">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('testProject')"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item :label="$t('product.testSOP')" prop="testSOP">
+            <el-input placeholder="请选择路径" v-model="form.testSOP">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('testSOP')"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item :label="$t('product.fixPath')" prop="fixPath">
+            <el-input placeholder="请选择路径" v-model="form.fixPath">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('fixPath')"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item :label="$t('product.testAsset')" prop="testAsset">
+            <el-input placeholder="请选择路径" v-model="form.testAsset">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('testAsset')"></el-button>
+            </el-input>
+          </el-form-item>
+          
+          <el-form-item
+            :label="$t('product.technologicalProcessFile')"
+            prop="technologicalProcessFile"
+          >
+            <el-input placeholder="请选择路径" v-model="form.technologicalProcessFile">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('technologicalProcessFile')"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item :label="$t('product.assembleSOP')" prop="assembleSOP">
+            <el-input placeholder="请选择路径" v-model="form.assembleSOP">
+              <el-button slot="append" icon="el-icon-folder-opened" @click="openFolder('assembleSOP')"></el-button>
+            </el-input>
+          </el-form-item>
+          <p class="text-l mg-b10">
+            <el-button size="mini" class="fr" type="success" @click="addTechProcess">{{$t('common.add')}}</el-button>
+            {{$t('product.technologicalProcess')}}:</p>
+          <div>
+            <el-table :data="form.technologicalProcess" style="width: 100%" size="mini">
+              <el-table-column
+                :label="$t('product.procedure')"
+                prop="procedure"
+              ></el-table-column>
+              <el-table-column
+                :label="$t('product.standardTime')"
+                prop="standardTime"
+              ></el-table-column>
+              <el-table-column
+                :label="$t('common.operate')"
+              >
+                <template slot-scope="scope">
+                  <el-button type="text" size="mini" @click="editTechProcess(scope.row)">{{$t('common.edit')}}</el-button>
+                  <el-button type="text" class="myRed" size="mini" @click="deleteTechProcess(scope.row)">{{$t('common.delete')}}</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -141,15 +186,96 @@
         }}</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      class="mydialog"
+      :title="isAddTech ? $t('common.add') : $t('common.edit')"
+      :top="dialog_topStr"
+      :visible.sync="showAddTech"
+      :close-on-click-modal="false"
+      width="40%">
+      <div
+        class="grap-box"
+        style="overflow: auto"
+        :style="{ maxHeight: dialog_maxH + 'px' }"
+      >
+        <el-form
+          ref="formName"
+          :rules="rules"
+          :model="techForm"
+          label-width="120px"
+          size="mini"
+        >
+          <el-form-item :label="$t('product.procedure')" prop="procedure">
+            <el-input size="small" v-model="techForm.procedure"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('product.standardTime')" prop="standardTime">
+            <el-input size="small" v-model="techForm.standardTime"></el-input>
+          </el-form-item>
+          
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="showAddTech = false">{{
+          $t("common.cancel")
+        }}</el-button>
+        <el-button size="mini" type="primary" @click="isAddTech ? sureAddTechProcess('formName') : sureUpdateTechProcess('formName')">{{
+          $t("common.ok")
+        }}</el-button>
+      </span>
+    </el-dialog>
+
+      <form id="fileForm" style="height: 0">
+        <input
+          class="el-upload__input"
+          type="file"
+          id="fileFormInput"
+          @change="fileSelectChange"
+          nwdirectory
+        />
+      </form>
+
+    <!-- <pdfVue :url="filePath" :showDialog="showFile" @closeBox="showFile=false"></pdfVue> -->
+
+    <myDialog 
+      :titleName="theTitle"
+      :showDialog="showFile" 
+      :dialogWidth="dialogWidth"
+      @closeDialog="showFile=false">
+      <myPdf slot="container" :url="filePath"></myPdf>
+    </myDialog>
+
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 
+import myDialog from './myDialog.vue';
+
+import myPdf from './myPDF.vue';
+
+
 export default {
+  components:{
+    myDialog,
+    myPdf
+  },
   data() {
     return {
+      dialogWidth: '90%',
+      theTitle: '',
+      showFile: false,
+      filePath: '',
+      baseTechForm:{
+        id: '',
+        procedure:'',
+        standardTime: ''
+      },
+      techForm:{
+      },
+      isAddTech: true,
+      showAddTech: false,
       dataArr: [
         {
           name: "one",
@@ -171,10 +297,15 @@ export default {
         expire: "",
       },
       baseForm: {
-        id: "",
-        name: "",
-        typeNumber: "",
-        expire: "",
+        typeNumber: "1",
+        testProject: "2",
+        matterNumber: "3",
+        testSOP: '4',
+        fixPath: "5",
+        testAsset: '6',
+        technologicalProcess:[],
+        technologicalProcessFile: "PLM路径",
+        assembleSOP: '7'
       },
       showAdd: false,
       isAdd: true,
@@ -210,12 +341,6 @@ export default {
     };
   },
   mounted() {
-    // 获取页面的高度
-    let bodyH = document.documentElement.clientHeight;
-    let dialog_topBottom = 110;
-    this.$store.commit("save_dialog_maxH", bodyH - dialog_topBottom);
-    console.log("dialog_maxH", this.dialog_maxH);
-
     this.funA();
   },
   computed: {
@@ -225,28 +350,28 @@ export default {
         id: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         name: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         typeNumber: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         expire: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
@@ -254,6 +379,79 @@ export default {
     },
   },
   methods: {
+    lookTechProcess(row){
+      console.error('lookTechProcess:',row);
+    },
+    lookAssembleSOP(row){
+      console.error('lookAssembleSOP:',row);
+    },
+    exportTestAsset(row){
+      console.error('exportTestAsset:',row);
+    },
+    lookTestAsset(row){
+      console.error('lookTestAsset:',row);
+    },
+    lookTestSOP(row){
+      console.error('lookTestSOP:',row);
+      this.dialogWidth="80%";
+      this.theTitle= Languages.t('common.preview')
+      this.showFile= true;
+      this.filePath='http://localhost:7000/getpdf'
+    },
+    addTechProcess(){
+      this.isAddTech = true;
+      this.showAddTech=true;
+      this.baseTechForm.id = Date.now();
+      this.techForm=JSON.parse(JSON.stringify(this.baseTechForm))
+    },
+    sureAddTechProcess(){
+      this.showAddTech=false;
+      this.form.technologicalProcess.push(JSON.parse(JSON.stringify(this.techForm)));
+      console.error('technologicalProcess:',this.form.technologicalProcess);
+    },
+    editTechProcess(form){
+      this.isAddTech = false;
+      this.showAddTech=true;
+      this.techForm=JSON.parse(JSON.stringify(form))
+    },
+    sureUpdateTechProcess(){
+      this.showAddTech=false;
+      let arr = this.form.technologicalProcess;
+      let row = JSON.parse(JSON.stringify(this.techForm));
+      console.error('更新：',row);
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].id==row.id){
+          console.error('找到',i);
+          arr.splice(i,1,row);
+          break;
+        }
+      }
+    },
+    async deleteTechProcess(row){
+      let rel = await this.answerFun(Languages.t('common.sureToDelete'));
+      if(!rel){
+        return
+      }
+      let arr = this.form.technologicalProcess;
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].procedure==row.procedure){
+          arr.splice(i,1);
+          break;
+        }
+      }
+    },
+    openFolder(currentFileName){
+      this.currentFileName = currentFileName;
+      document.getElementById('fileForm') &&
+          document.getElementById('fileForm').reset();
+        // 再打开
+        document.getElementById('fileFormInput').click();
+    },
+    async fileSelectChange() {
+      const theSelectPath = event.target.value;
+      console.log('fileSelectChange:', theSelectPath);
+      this.form[this.currentFileName]=theSelectPath;
+    },
     formatter(expire) {
       console.log("修改日期-kk:", expire);
       return this.formatDate(expire);

@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2020-10-25 22:57:53
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-08 08:53:58
+ * @LastEditTime: 2021-06-11 09:48:07
  */
 var isPro = process.env.NODE_ENV === 'production';
 // 引入jq需要加入以下代码
@@ -47,8 +47,8 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'http://47.105.90.67:7070/',//这里后台的地址模拟的;应该填写你们真实的后台接口
-        // target: 'http://localhost:7070/',
+        // target: 'http://47.105.90.67:7070/',//这里后台的地址模拟的;应该填写你们真实的后台接口
+        target: 'http://localhost:7070/',
         ws: true,
         changOrigin: true,//允许跨域
         pathRewrite: {

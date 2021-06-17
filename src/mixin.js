@@ -4,10 +4,16 @@
  * @Author: yizheng.yuan
  * @Date: 2021-05-08 09:10:17
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-26 11:34:30
+ * @LastEditTime: 2021-06-16 15:39:11
  */
 export default {
   methods: {
+    myMsg(theText, theType) {
+      this.$message({
+        message: theText,
+        type: theType
+      });
+    },
     copyObj(obj) {
       return JSON.parse(JSON.stringify(obj))
     },

@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-26 17:04:36
+ * @LastEditTime: 2021-06-15 18:02:17
 -->
 <template>
   <div class="flexBox-c pd10">
@@ -131,6 +131,7 @@
 <script>
 import { mapState } from "vuex";
 
+
 export default {
   data() {
     return {
@@ -209,28 +210,28 @@ export default {
         id: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         name: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         typeNumber: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],
         expire: [
           {
             required: true,
-            message: Language.t("common.notNull"),
+            message: Languages.t("common.notNull"),
             trigger: "blur",
           },
         ],

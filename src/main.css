@@ -1,36 +1,3 @@
-*{
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-.fl{float: left;}
-.fr{float: right;}
-
-
-.flexBox-r{
-  display: flex;
-}
-.flexBox-c{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.top-title{
-  margin-top: 10px;
-  height: 35px;
-  line-height: 35px;
-  text-align: left;
-  font-size: 16px;
-  padding: 0 10px;
-}
-.flex1{
-  flex: 1;
-}
-.grap-box{
-  border-radius: 5px;
-  background-color: #ddd;
-  padding: 10px;
-}
 
 .mydialog .el-dialog__header {
 	padding: 15px 20px 10px;
@@ -59,9 +26,7 @@
   width:48%; float:left;margin-left:1%;
 }
 
-.mg-t20{
-  margin-top: 20px;
-}
+
 
 .pd-t10-b20{
   padding-top: 10px;
@@ -79,43 +44,21 @@
   text-align: left;
 }
 
-/* reset */
-*{box-sizing: border-box;padding: 0; margin: 0; list-style: none;}
-
-.wrapBox{
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
+.top-title{
+  margin-top: 10px;
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  font-size: 16px;
+  padding: 0 10px;
 }
 .h50{
   height: 50px; line-height: 50px; font-size: 16px; padding:0 10px; text-align: left;
   margin-bottom: 5px;
 }
 
-.pd10{
-  padding: 10px;
-}
-.pd-lr10{
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.pd-l10{
-  padding-left:10px;
-}
-.pd-10{
-  padding-bottom:10px;
 
-}
-.mg-b5{
-  margin-bottom: 5px;
-}
-.vCenter{
-  display: flex;
-  align-items: center;
-}
+
 
 
 /* 字体 */
@@ -156,13 +99,4 @@
 .radius_tbl5{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-}
-.hand{
-  cursor: pointer;
-}
-.myBlue{
-  color: #409EFF;
-}
-.redColor,.myRed{
-  color: #f73f3f;
 }

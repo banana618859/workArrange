@@ -32,6 +32,6 @@ Vue.use(ElementUI,{
   i18n:(key,value) =>i18n.t(key,value) //重点！！在注册Element时设置i18n的处理方法（这里有个小坑）
 });
 
-window.Language = i18n;
+window.Languages = i18n;
 
 export default i18n

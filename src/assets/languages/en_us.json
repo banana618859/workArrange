@@ -1,5 +1,11 @@
 {
   "common":{
+    "developing": "Developing...",
+    "export": "export",
+    "see": "see",
+    "preview":"Preview",
+    "sureToDelete": "Are you sure to delete?",
+    "upload": "upload",
     "add": "add",
     "cancel": "Cancel",
     "ok": "OK",
@@ -7,20 +13,22 @@
     "delete": "delete",
     "edit": "edit",
     "notNull": "Can not null!",
+    "pleaseSelect":"Please select",
     "pleaseInputKeyword":"Please input keyword",
     "pleaseSelectDate": "Please select date",
     "expire": "expire",
-    "instrumentManager": "Instrument manager",
-    "productManager": "Product manager",
-    "orderManager": "Order manager",
-    "oldManager": "Old manager",
-    "rightManager": "Right manager",
-    "otherManager": "Other manager",
-    "compManager": "Component manager",
+    "instrumentManager": "Instrument management",
+    "productManager": "Product management",
+    "orderManager": "Order management",
+    "assemble": "Assemble management",
+    "oldManager": "Old management",
+    "rightManager": "Right management",
+    "otherManager": "Other management",
+    "compManager": "Component management",
     "operate": "Operate"
   },
   "instrument":{
-    "instrumentManager": "Instrument manager",
+    "instrumentManager": "Instrument management",
     "id": "id",
     "name": "name",
     "typeNumber": "typeNumber",
@@ -32,9 +40,39 @@
     "matterNumber": "Matter number",
     "testSOP":"Test SOP",
     "fixPath":"Fix path",
-    "testAssest": "Test assest",
+    "testAsset": "Test asset",
     "technologicalProcess":"Technological process",
     "technologicalProcessFile":"Technological process file",
-    "assembleSOP":"Assemble SOP"
+    "assembleSOP":"Assemble SOP",
+    "procedure":"Procedure",
+    "standardTime":"Standard time"
+  },
+  "order":{
+    "orderManagement":"Order management",
+    "orderNumber": "Order number",
+    "outputStatus": "Output status",
+    "productSn": "Product SN",
+    "deliveryTime": "Delivery time"
+  },
+  "assemble":{
+    "assembleDataManagement": "Product assemble data management",
+    "productType": "Product type",
+    "assemblePerson": "Assemble person",
+    "assembleType": "Assemble type",
+    "assembleModel": "Assemble model",
+    "modelCode": "Model code"
+  },
+  "old":{
+    "oldDataManagement": "Product old data management",
+    "productIndex": "Product index",
+    "oldPerson": "Old person",
+    "oldType": "Old type",
+    "productType": "Product type",
+    "oldTime": "OldTime",
+    "oldDuration": "Old duration",
+    "barCodeLength": "Bar code length",
+    "barCodeCount": "Bar code count",
+    "barCodeGroup": "Bar code group",
+    "barCode": "Bar code"
   }
 }

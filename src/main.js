@@ -3,14 +3,17 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-26 15:02:44
+ * @LastEditTime: 2021-06-11 16:06:41
  */
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-import './main.css'
+// 样式
+import './my-reset.css';
+import './pd-mg.css';
+import './main.css';
 
 // import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

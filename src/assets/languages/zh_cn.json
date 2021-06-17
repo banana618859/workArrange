@@ -1,5 +1,11 @@
 {
   "common":{
+    "developing": "开发中...",
+    "export": "导出",
+    "see": "查看",
+    "preview":"预览",
+    "sureToDelete": "确定删除?",
+    "upload": "上传管理",
     "add": "添加",
     "cancel": "取消",
     "ok": "确定",
@@ -7,6 +13,7 @@
     "delete": "删除",
     "edit": "编辑",
     "notNull": "不能为空!",
+    "pleaseSelect":"请选择",
     "pleaseInputKeyword":"请输入关键词",
     "pleaseSelectDate": "请选择日期",
     "expire": "已过期",
@@ -14,6 +21,7 @@
     "productManager": "产品管理",
     "orderManager": "订单管理",
     "oldManager": "老化管理",
+    "assemble": "组装管理",
     "rightManager": "权限管理",
     "otherManager": "其他管理",
     "compManager": "组件管理",
@@ -32,9 +40,39 @@
     "matterNumber": "料号",
     "testSOP":"测试SOP",
     "fixPath":"固件路径",
-    "testAssest": "测试资源",
+    "testAsset": "测试资源",
     "technologicalProcess":"工艺流程",
     "technologicalProcessFile":"工艺流程文件",
-    "assembleSOP":"组装SOP"
+    "assembleSOP":"组装SOP",
+    "procedure":"工序",
+    "standardTime":"标准工时"
+  },
+  "order":{
+    "orderManagement":"出货订单管理",
+    "orderNumber": "订单号",
+    "outputStatus": "输出情况",
+    "productSn": "产品SN",
+    "deliveryTime": "出货时间"
+  },
+  "assemble":{
+    "assembleDataManagement": "产品组装数据管理",
+    "productType": "产品型号",
+    "assemblePerson": "组装人员",
+    "assembleType": "组装类型",
+    "assembleModel": "组装模块",
+    "modelCode": "模块条码"
+  },
+  "old":{
+    "oldDataManagement": "产品老化数据管理",
+    "productIndex": "产品序号",
+    "oldPerson": "老化员",
+    "oldType": "老化类型",
+    "productType": "产品型号",
+    "oldTime": "老化时间",
+    "oldDuration": "老化时长",
+    "barCodeLength": "条码长度",
+    "barCodeCount": "条码数量",
+    "barCodeGroup": "所有条码",
+    "barCode": "条码"
   }
 }

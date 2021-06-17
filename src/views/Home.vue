@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-26 18:33:12
+ * @LastEditTime: 2021-06-01 16:58:40
 -->
 <template>
   <div
@@ -69,6 +69,10 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+
+import aaa from './abc.json'
+
+console.error('aaa:',aaa);
 
 export default {
   name: "Home",

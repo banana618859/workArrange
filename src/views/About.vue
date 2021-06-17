@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-24 17:50:32
+ * @LastEditTime: 2021-05-28 17:14:56
 -->
 <template>
   <div class="about">
@@ -27,6 +27,11 @@
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="age" label="年龄"></el-table-column>
         <el-table-column prop="job" label="工作"></el-table-column>
+        <el-table-column prop="img" label="头像">
+          <template slot-scope="scope">
+            <img :src="scope.row.img" />
+          </template>
+        </el-table-column>
       </el-table>
 
     </div>
