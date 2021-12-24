@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-06-18 11:38:36
+ * @LastEditTime: 2021-06-18 18:06:15
 -->
 <template>
   <div class="flexBox-c pd10">
@@ -11,73 +11,40 @@
       <el-button size="mini" type="success" @click="addFun" class="fr">{{
         $t("common.add")
       }}</el-button>
-      <el-button
-        size="mini"
-        type="primary"
-        @click="exportFun"
-        class="fr mg-r10"
-        >{{ $t("common.export") }}</el-button
-      >
+      <el-button size="mini" type="primary" @click="exportFun" class="fr mg-r10">{{
+        $t("common.export")
+      }}</el-button>
 
-      {{ $t("old.oldDataManagement") }}
+      {{ $t("assemble.assembleDataManagement") }}
     </p>
     <div class="grap-box flex1">
       <el-table
         :data="
           tableData.filter(
             (data) =>
-              !search ||
-              data.productIndex.toLowerCase().includes(search.toLowerCase())
+              !search || data.productType.toLowerCase().includes(search.toLowerCase())
           )
         "
         style="width: 100%"
       >
-        <el-table-column
-          :label="$t('old.productIndex')"
-          prop="productIndex"
-          width="140px"
-        >
+        <el-table-column :label="$t('assemble.productType')" prop="productType" width="140px">
         </el-table-column>
         <el-table-column
-          :label="$t('old.oldPerson')"
-          prop="oldPerson"
+          :label="$t('assemble.assemblePerson')"
+          prop="assemblePerson"
         ></el-table-column>
         <el-table-column
-          :label="$t('old.oldType')"
-          prop="oldType"
+          :label="$t('assemble.assembleType')"
+          prop="assembleType"
         ></el-table-column>
         <el-table-column
-          :label="$t('old.productType')"
-          prop="productType"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('old.oldTime')"
-          prop="oldTime"
-          width="160px"
-          :formatter="formatterTime"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('old.oldDuration')"
-          prop="oldDuration"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('old.barCodeLength')"
-          prop="barCodeLength"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('old.barCodeCount')"
-          prop="barCodeCount"
-        ></el-table-column>
-        <el-table-column
-          :label="$t('old.barCodeGroup')"
-          prop="barCodeGroup"
-          :formatter="formatter"
-        >
+          :label="$t('assemble.assembleModel')"
+          prop="assembleModel" :formatter="formatter">
         </el-table-column>
-        <el-table-column align="right" width="200px">
+        <el-table-column align="right">
           <template slot="header" slot-scope="scope">
             <div class="flexBox-r">
-              <span class="mg-r10">{{ $t("common.operate") }}</span>
+              <span class="mg-r10">{{$t('common.operate')}}</span>
               <el-input
                 class="flex1"
                 v-model="search"
@@ -123,128 +90,51 @@
           size="mini"
           :label-width="lableWidth"
         >
-          <el-form-item :label="$t('old.productIndex')" prop="productIndex">
-            <el-select
-              class="p100"
-              v-model="form.productIndex"
-              size="mini"
-              :placeholder="$t('common.pleaseSelect')"
-            >
-              <el-option
-                v-for="(item, index) in allProductType"
-                :key="item + index"
-                :label="item"
-                :value="item"
-              ></el-option>
+          <el-form-item :label="$t('assemble.productType')" prop="productType">
+             <el-select class="p100" v-model="form.productType" size="mini" :placeholder="$t('common.pleaseSelect')">
+              <el-option v-for="(item,index) in allProductType" :key="item+index"
+              :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('old.oldPerson')" prop="oldPerson">
-            <el-select
-              class="p100"
-              v-model="form.oldPerson"
-              size="mini"
-              :placeholder="$t('common.pleaseSelect')"
-            >
-              <el-option
-                v-for="(item, index) in allAssemblePerson"
-                :key="item + index"
-                :label="item"
-                :value="item"
-              ></el-option>
+          <el-form-item :label="$t('assemble.assemblePerson')" prop="assemblePerson">
+            <el-select class="p100" v-model="form.assemblePerson" size="mini" :placeholder="$t('common.pleaseSelect')">
+              <el-option v-for="(item,index) in allAssemblePerson" :key="item+index"
+              :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('old.oldType')" prop="oldType">
-            <el-select
-              class="p100"
-              v-model="form.oldType"
-              size="mini"
-              :placeholder="$t('common.pleaseSelect')"
-            >
-              <el-option
-                v-for="(item, index) in allAssembleType"
-                :key="item + index"
-                :label="item"
-                :value="item"
-              ></el-option>
+          <el-form-item :label="$t('assemble.assembleType')" prop="assembleType">
+            <el-select class="p100" v-model="form.assembleType" size="mini" :placeholder="$t('common.pleaseSelect')">
+              <el-option v-for="(item,index) in allAssembleType" :key="item+index"
+              :label="item" :value="item"></el-option>
             </el-select>
-          </el-form-item>
-
-          <el-form-item :label="$t('old.productType')" prop="productType">
-            <el-select
-              class="p100"
-              v-model="form.productType"
-              size="mini"
-              :placeholder="$t('common.pleaseSelect')"
-            >
-              <el-option
-                v-for="(item, index) in allAssembleType"
-                :key="item + index"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item :label="$t('old.oldTime')" prop="oldTime">
-            <el-date-picker
-              style="width:100%"
-              v-model="form.oldTime"
-              type="datetime"
-              value-format="timestamp"
-              placeholder="选择日期时间">
-            </el-date-picker>
-          </el-form-item>
-
-          <el-form-item :label="$t('old.oldDuration')" prop="oldDuration">
-            <el-input v-model.number="form.oldDuration" size="mini"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('old.barCodeLength')" prop="barCodeLength">
-            <el-input v-model.number="form.barCodeLength" size="mini"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('old.barCodeCount')" prop="barCodeCount">
-            <el-input v-model.number="form.barCodeCount" size="mini"></el-input>
           </el-form-item>
 
           <p class="text-l mg-b10">
-            <el-button
-              size="mini"
-              class="fr"
-              type="success"
-              @click="addModel"
-              >{{ $t("common.add") }}</el-button
-            >
-            {{ $t("old.barCodeGroup") }}:
-          </p>
+            <el-button size="mini" class="fr" type="success" @click="addModel">{{$t('common.add')}}</el-button>
+            {{$t('assemble.assembleModel')}}:</p>
           <div>
-            <el-table :data="form.barCodeGroup" style="width: 100%" size="mini">
-              <el-table-column type="index" width="50" label="序号"> </el-table-column>
+            <el-table :data="form.assembleModel" style="width: 100%" size="mini">
               <el-table-column
-                :label="$t('old.barCode')"
-                prop="barCode"
+                type="index"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                :label="$t('assemble.modelCode')"
+                prop="modelCode"
               ></el-table-column>
-              <el-table-column :label="$t('common.operate')">
+              <el-table-column
+                :label="$t('common.operate')"
+              >
                 <template slot-scope="scope">
-                  <el-button
-                    type="text"
-                    size="mini"
-                    @click="editModel(scope.row)"
-                    >{{ $t("common.edit") }}</el-button
-                  >
-                  <el-button
-                    type="text"
-                    class="myRed"
-                    size="mini"
-                    @click="deleteModel(scope.row)"
-                    >{{ $t("common.delete") }}</el-button
-                  >
+                  <el-button type="text" size="mini" @click="editModel(scope.row)">{{$t('common.edit')}}</el-button>
+                  <el-button type="text" class="myRed" size="mini" @click="deleteModel(scope.row)">{{$t('common.delete')}}</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -263,8 +153,7 @@
       :top="dialog_topStr"
       :visible.sync="showAdd2"
       :close-on-click-modal="false"
-      width="40%"
-    >
+      width="40%">
       <div
         class="grap-box"
         style="overflow: auto"
@@ -272,14 +161,15 @@
       >
         <el-form
           ref="formName2"
-          :rules="rules2"
+          :rules="rules"
           :model="techForm"
           label-width="120px"
           size="mini"
         >
-          <el-form-item :label="$t('old.barCode')" prop="barCode">
-            <el-input size="small" v-model="techForm.barCode"></el-input>
+          <el-form-item :label="$t('assemble.modelCode')" prop="modelCode">
+            <el-input size="small" v-model="techForm.modelCode"></el-input>
           </el-form-item>
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -291,6 +181,7 @@
         }}</el-button>
       </span>
     </el-dialog>
+
   </div>
 </template>
 
@@ -304,15 +195,10 @@ export default {
       form: {},
       baseForm: {
         id: '',
-        productIndex: '111',
-        oldPerson: '李四',
-        oldType: '单一模式',
-        productType: '组合模式',
-        oldTime: '',
-        oldDuration: 2,
-        barCodeLength: 3,
-        barCodeCount: 4,
-        barCodeGroup: [],
+        productType: '',
+        assemblePerson: '',
+        assembleType: '',
+        assembleModel: [],
       },
       showAdd: false,
       isAdd: true,
@@ -323,39 +209,20 @@ export default {
       allAssembleType: ['组合模式', '单一模式', '其他模式'],
       baseTechForm: {
         id: '',
-        barCode: '',
+        modelCode: '',
       },
-      techForm: {},
+      techForm: {
+      },
       isAddModel: true,
       showAdd2: false,
     };
   },
-  mounted() {},
+  mounted() {
+  },
   computed: {
     ...mapState(['dialog_maxH', 'dialog_topStr']),
     rules() {
       return {
-        productIndex: [
-          {
-            required: true,
-            message: Languages.t('common.notNull'),
-            trigger: 'blur',
-          },
-        ],
-        oldPerson: [
-          {
-            required: true,
-            message: Languages.t('common.notNull'),
-            trigger: 'blur',
-          },
-        ],
-        oldType: [
-          {
-            required: true,
-            message: Languages.t('common.notNull'),
-            trigger: 'blur',
-          },
-        ],
         productType: [
           {
             required: true,
@@ -363,39 +230,29 @@ export default {
             trigger: 'blur',
           },
         ],
-        oldTime: [
+        assemblePerson: [
           {
             required: true,
             message: Languages.t('common.notNull'),
             trigger: 'blur',
           },
         ],
-        oldDuration: [
+        assembleType: [
           {
             required: true,
             message: Languages.t('common.notNull'),
             trigger: 'blur',
           },
         ],
-        barCodeLength: [
+
+        assembleModel: [
           {
             required: true,
             message: Languages.t('common.notNull'),
             trigger: 'blur',
           },
         ],
-        barCodeCount: [
-          {
-            required: true,
-            message: Languages.t('common.notNull'),
-            trigger: 'blur',
-          },
-        ],
-      };
-    },
-    rules2() {
-      return {
-        barCode: [
+        modelCode: [
           {
             required: true,
             message: Languages.t('common.notNull'),
@@ -406,16 +263,13 @@ export default {
     },
   },
   methods: {
-    formatterTime(row, column, value, index) {
-      return this.formatDate(value);
-    },
     formatter(row, column, value, index) {
       let str = '';
       for (let i = 0; i < value.length; i++) {
         if (i > 0) {
-          str += `,${value[i].barCode}`;
+          str += `,${value[i].modelCode}`;
         } else {
-          str += value[i].barCode;
+          str += value[i].modelCode;
         }
       }
       return str;
@@ -425,6 +279,8 @@ export default {
       this.myMsg(Languages.t('common.developing'), 'warning');
     },
     addFun() {
+      // 添加时，清空关键词
+      this.search = '';
       const iszh = this.$i18n.locale == 'zh';
       this.lableWidth = '130px';
       if (iszh) {
@@ -451,7 +307,6 @@ export default {
       });
     },
     sureUpdate(row) {
-      console.error('sureUpdate', row);
       for (let i = 0; i < this.tableData.length; i++) {
         if (this.tableData[i].id == row.id) {
           this.tableData.splice(i, 1, row);
@@ -461,7 +316,6 @@ export default {
       this.showAdd = false;
     },
     handleEdit(index, row) {
-      console.error('handleEdit:', index, row);
       this.form = this.copyObj(row);
       this.isAdd = false;
       this.showAdd = true;
@@ -490,9 +344,7 @@ export default {
         if (valid) {
           // 增加
           if (this.isAddModel) {
-            this.form.barCodeGroup.push(
-              JSON.parse(JSON.stringify(this.techForm)),
-            );
+            this.form.assembleModel.push(JSON.parse(JSON.stringify(this.techForm)));
           }
           // 修改
           else {
@@ -510,7 +362,7 @@ export default {
       this.techForm = JSON.parse(JSON.stringify(form));
     },
     sureUpdateModel() {
-      const arr = this.form.barCodeGroup;
+      const arr = this.form.assembleModel;
       const row = JSON.parse(JSON.stringify(this.techForm));
       console.error('更新：', row, arr);
       for (let i = 0; i < arr.length; i++) {
@@ -526,7 +378,7 @@ export default {
       if (!rel) {
         return;
       }
-      const arr = this.form.barCodeGroup;
+      const arr = this.form.assembleModel;
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].id == row.id) {
           arr.splice(i, 1);

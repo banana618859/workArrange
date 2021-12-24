@@ -24,6 +24,8 @@
     "assemble": "组装管理",
     "rightManager": "权限管理",
     "otherManager": "其他管理",
+    "otherManager2": "其他管理2",
+    "otherManager3": "其他管理3",
     "compManager": "组件管理",
     "operate": "操作"
   },

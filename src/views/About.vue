@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
@@ -39,66 +39,65 @@
 </template>
 
 <script>
-  export default{
-    data(){
-      return{
-        word: '你好，一正！',
-        baseUrl: 'https://api.oick.cn/txt/apiz.php?',
-        url: '',
-        text: 'text=',
-        other: ';spd=1',
-        tempUrl: '',
-        taData: []
+export default {
+  data() {
+    return {
+      word: '你好，一正！',
+      baseUrl: 'https://api.oick.cn/txt/apiz.php?',
+      url: '',
+      text: 'text=',
+      other: ';spd=1',
+      tempUrl: '',
+      taData: [],
 
-      }
+    };
+  },
+  created() {
+    const keyWork = this.text + this.word;
+    this.url = this.baseUrl + keyWork;
+    console.log('this.url', this.url);
+    this.getData();
+  },
+  watch: {
+    word(n, o) {
+      const keyWork = this.text + this.word;
+      this.tempUrl = this.baseUrl + keyWork;
+      console.log(this.url);
     },
-    created(){
-      let keyWork = this.text+this.word
-      this.url=this.baseUrl + keyWork;
-      console.log('this.url',this.url);
-      this.getData()
-    },
-    watch:{
-      word(n,o){
-        let keyWork = this.text+this.word
-        this.tempUrl=this.baseUrl + keyWork;
-        console.log(this.url);
-      }
-    },
-    methods:{
-      
-      getData(){
-        this.taData=[]
-        this.$axios.get('/parameter/query')
-        .then(res => {
-          console.log('res',res);
-          this.taData = res.data.data.rows
-        })
-      },
-      readWord(){
-        this.url = this.tempUrl;
-        // var myVideo = document.getElementsByTagName('video')[0];
-        // console.log('myVideo',myVideo,myVideo.readyState);
-        // setTimeout(()=>{
-          
+  },
+  methods: {
 
-        //   console.log('myVideo',myVideo,myVideo.readyState);
-        //   var keys=[]
-        //   for(let key in myVideo){
-        //     keys.push(key)
-        //   }
-        //   this.play()
-        // },200)
+    getData() {
+      this.taData = [];
+      this.$axios.get('/parameter/query')
+        .then((res) => {
+          console.log('res', res);
+          this.taData = res.data.data.rows;
+        });
+    },
+    readWord() {
+      this.url = this.tempUrl;
+      // var myVideo = document.getElementsByTagName('video')[0];
+      // console.log('myVideo',myVideo,myVideo.readyState);
+      // setTimeout(()=>{
 
-        // let url = `/zzz/apiz.php?text=${this.word}&spd=1`
-        // this.$axios.get(url)
-        // .then(res=>{
-        //   console.log('res',res);
-        // })
-        // .catch(err=>{
-        //   console.log('err',err);
-        // })
-      }
-    }
-  }
+      //   console.log('myVideo',myVideo,myVideo.readyState);
+      //   var keys=[]
+      //   for(let key in myVideo){
+      //     keys.push(key)
+      //   }
+      //   this.play()
+      // },200)
+
+      // let url = `/zzz/apiz.php?text=${this.word}&spd=1`
+      // this.$axios.get(url)
+      // .then(res=>{
+      //   console.log('res',res);
+      // })
+      // .catch(err=>{
+      //   console.log('err',err);
+      // })
+    },
+  },
+};
 </script>

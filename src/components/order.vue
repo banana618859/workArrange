@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-06-16 15:38:03
+ * @LastEditTime: 2021-06-18 14:07:25
 -->
 <template>
   <div class="flexBox-c pd10">
@@ -14,7 +14,7 @@
       <el-button size="mini" type="primary" @click="exportFun" class="fr mg-r10">{{
         $t("common.export")
       }}</el-button>
-      
+
       {{ $t("order.orderManagement") }}
     </p>
     <div class="grap-box flex1">
@@ -134,102 +134,102 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState } from 'vuex';
 
 export default {
   data() {
     return {
       form: {},
       baseForm: {
-        orderNumber: "",
-        outputStatus: "",
-        productSn: "",
-        deliveryTime: "",
+        orderNumber: '',
+        outputStatus: '',
+        productSn: '',
+        deliveryTime: '',
       },
       showAdd: false,
       isAdd: true,
-      search: "",
+      search: '',
       tableData: [],
       pickerOptions: {
         shortcuts: [
           {
-            text: "今天",
+            text: '今天',
             onClick(picker) {
-              picker.$emit("pick", new Date());
+              picker.$emit('pick', new Date());
             },
           },
           {
-            text: "明天",
+            text: '明天',
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() + 3600 * 1000 * 24);
-              picker.$emit("pick", date);
+              picker.$emit('pick', date);
             },
           },
           {
-            text: "一周后",
+            text: '一周后',
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
+              picker.$emit('pick', date);
             },
           },
         ],
       },
+
     };
   },
   mounted() {
   },
   computed: {
-    ...mapState(["dialog_maxH", "dialog_topStr"]),
+    ...mapState(['dialog_maxH', 'dialog_topStr']),
     rules() {
       return {
         orderNumber: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         outputStatus: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         productSn: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         deliveryTime: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
       };
     },
   },
   methods: {
-    exportFun(){
+    exportFun() {
       console.error('exportFun');
-      this.myMsg(Languages.t('common.developing'),'warning')
+      this.myMsg(Languages.t('common.developing'), 'warning');
     },
     formatter(deliveryTime) {
-      console.log("修改日期-kk:", deliveryTime);
+      console.log('修改日期-kk:', deliveryTime);
       return this.formatDate(deliveryTime);
     },
     addFun() {
       this.showAdd = true;
       this.isAdd = true;
       this.form = JSON.parse(JSON.stringify(this.baseForm));
-      this.form.orderNumber = Date.now() + "";
+      this.form.orderNumber = `${Date.now()}`;
     },
     sureFun(formName) {
       this.$refs[formName].validate((valid) => {
@@ -241,7 +241,7 @@ export default {
           }
           this.showAdd = false;
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
@@ -262,7 +262,7 @@ export default {
     },
     async handleDelete(index, row) {
       console.log(index, row);
-      let rel = await this.answerFun();
+      const rel = await this.answerFun();
       if (!rel) {
         return;
       }

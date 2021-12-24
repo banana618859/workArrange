@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
@@ -16,17 +16,18 @@
 
 <script>
 
-import pagination from './pagination'
+import pagination from './pagination';
+
 export default {
-  components:{
-    pagination
+  components: {
+    pagination,
   },
-  data(){
-    return{
-      allCount: 50
-    }
-  }
-}
+  data() {
+    return {
+      allCount: 50,
+    };
+  },
+};
 </script>
 
 <style>

@@ -1,0 +1,39 @@
+/* reset */
+*{box-sizing: border-box;padding: 0; margin: 0; list-style: none;}
+
+/* 浮动布局 */
+.fl{float: left;}
+.fr{float: right;}
+
+/* 撑开页面 */
+.wrapBox{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+
+/* flex布局 */
+.flex1{flex: 1;}
+.flexBox-r{display: flex;}
+.flexBox-c{display: flex;flex-direction: column;height: 100%;}
+
+/* 垂直居中 */
+.vCenter{display: flex;align-items: center;}
+
+/* 灰色盒子 */
+.grap-box{ border-radius: 5px; background-color: #ddd; padding: 10px;}
+
+/* 页面修饰 */
+.hand{cursor: pointer;}
+.myBlue{color: #409EFF;}
+.redColor,.myRed{color: #f73f3f;}
+.redColor:hover,.myRed:hover{color: #f73f3f;}
+
+.text-l{text-align: left;}
+.text-r{text-align: right;}
+.text-c{text-align: center;}
+
+.p100{width: 100%;}

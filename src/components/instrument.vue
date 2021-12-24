@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-05-25 12:01:07
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-06-15 18:02:17
+ * @LastEditTime: 2021-12-24 13:52:15
 -->
 <template>
   <div class="flexBox-c pd10">
@@ -129,110 +129,114 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState } from 'vuex';
 
 export default {
   data() {
     return {
-      dataArr: [
-        {
-          name: "one",
-          class: "class1",
-        },
-        {
-          name: "two",
-          class: "class2",
-        },
-        {
-          name: "three",
-          class: "class2",
-        },
-      ],
       form: {
-        id: "",
-        name: "",
-        typeNumber: "",
-        expire: "",
+        id: '',
+        name: '',
+        typeNumber: '',
+        expire: '',
       },
       baseForm: {
-        id: "",
-        name: "",
-        typeNumber: "",
-        expire: "",
+        id: '',
+        name: '',
+        typeNumber: '',
+        expire: '',
       },
       showAdd: false,
       isAdd: true,
-      search: "",
+      search: '',
       tableData: [],
-      search: "",
+      search: '',
       pickerOptions: {
         shortcuts: [
           {
-            text: "今天",
+            text: '今天',
             onClick(picker) {
-              picker.$emit("pick", new Date());
+              picker.$emit('pick', new Date());
             },
           },
           {
-            text: "明天",
+            text: '明天',
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() + 3600 * 1000 * 24);
-              picker.$emit("pick", date);
+              picker.$emit('pick', date);
             },
           },
           {
-            text: "一周后",
+            text: '一周后',
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
+              picker.$emit('pick', date);
             },
           },
         ],
       },
     };
   },
+
   mounted() {
     // 获取页面的高度
-    let bodyH = document.documentElement.clientHeight;
-    let dialog_topBottom = 110;
-    this.$store.commit("save_dialog_maxH", bodyH - dialog_topBottom);
-    console.log("dialog_maxH", this.dialog_maxH);
+    const bodyH = document.documentElement.clientHeight;
+    const dialog_topBottom = 110;
+    this.$store.commit('save_dialog_maxH', bodyH - dialog_topBottom);
+    console.log('dialog_maxH', this.dialog_maxH);
 
-    this.funA();
+    // setTimeout(() => {
+    //   this.$store.state.dialog_maxH = 80;
+    // }, 2000);
+  },
+  watch: {
+    // flag: {
+    //   handler() {
+    //     console.error('进来了---dialog_maxH');
+    //     if (this.$store._committing) {
+    //       console.log(this.$store._committing);
+    //       alert('通过commit修改');
+    //     } else {
+    //       console.log(this.$store._committing);
+    //       alert('直接修改');
+    //     }
+    //   },
+    //   deep: true,
+    //   sync: true,
+    // },
   },
   computed: {
-    ...mapState(["dialog_maxH", "dialog_topStr"]),
+    ...mapState(['dialog_maxH', 'dialog_topStr']),
     rules() {
       return {
         id: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         name: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         typeNumber: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
         expire: [
           {
             required: true,
-            message: Languages.t("common.notNull"),
-            trigger: "blur",
+            message: Languages.t('common.notNull'),
+            trigger: 'blur',
           },
         ],
       };
@@ -240,46 +244,16 @@ export default {
   },
   methods: {
     formatter(expire) {
-      console.log("修改日期-kk:", expire);
+      console.log('修改日期-kk:', expire);
       return this.formatDate(expire);
     },
-    funA() {
-      let nameArr = [];
-      let newArr = [];
-      let dataArr = [
-        {
-          name: "one",
-          class: "class1",
-        },
-        {
-          name: "two",
-          class: "class2",
-        },
-        {
-          name: "three",
-          class: "class2",
-        },
-      ];
-      for (let i = 0; i < dataArr.length; i++) {
-        if (!nameArr.includes(dataArr[i].class)) {
-          nameArr.push(dataArr[i].class);
-          // 新建
-          newArr.push({
-            class: dataArr[i].class,
-            children: [dataArr[i]],
-          });
-        } else {
-          let indx = nameArr.indexOf(dataArr[i].class);
-          newArr[indx].children.push(dataArr[i]);
-        }
-      }
-      console.log("分组后结果--newArr:", nameArr, newArr);
-    },
     addFun() {
+      // 添加时，清空关键词
+      this.search = '';
       this.showAdd = true;
       this.isAdd = true;
       this.form = JSON.parse(JSON.stringify(this.baseForm));
-      this.form.id = Date.now() + "";
+      this.form.id = `${Date.now()}`;
     },
     sureFun(formName) {
       this.$refs[formName].validate((valid) => {
@@ -291,7 +265,7 @@ export default {
           }
           this.showAdd = false;
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
@@ -312,7 +286,7 @@ export default {
     },
     async handleDelete(index, row) {
       console.log(index, row);
-      let rel = await this.answerFun();
+      const rel = await this.answerFun();
       if (!rel) {
         return;
       }

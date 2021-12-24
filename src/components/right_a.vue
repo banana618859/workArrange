@@ -3,26 +3,22 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-19 11:30:56
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-06-22 09:57:08
+ * @LastEditTime: 2021-05-08 23:13:06
 -->
 <template>
   <div>
     <p class="pageTitle" style="margin-bottom: 10px">权限管理模块</p>
 
-    <p class="textL" style="margin-bottom: 10px; padding: 0 20px">
+    <p class="textL" style="margin-bottom: 10px;padding: 0 20px;">
       角色列表：<el-button @click="addRole" size="mini" type="primary"
         >增加角色</el-button
       >
     </p>
 
-    <div style="margin: 20px">
+  <div style="margin:20px;">
       <el-table :data="allRole" border size="mini">
         <el-table-column type="index" label="序号" width="60"></el-table-column>
-        <el-table-column
-          prop="name"
-          label="角色名"
-          width="200"
-        ></el-table-column>
+        <el-table-column prop="name" label="角色名" width="200"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="editRow(scope.row)"
@@ -34,7 +30,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+  </div>
 
     <el-dialog
       :title="isAdd ? '新增角色' : '修改角色'"
@@ -55,15 +51,13 @@
         </p>
         <p v-else>当前角色：{{ currentRole.name }}</p>
         <div style="max-height: 560px; overflow: auto; margin-top: 5px">
-          <rightDetail
+          <rightBox
             ref="rightBoxRef"
             :allRight="currentRole.allRight"
             @topClick="topClick"
-            @titleClickFun="titleClickFun"
-            @oneClick="oneClick"
-            @topClickAll="topSelectAll"
+            @sonTitleClick="sonTitleClick"
           >
-          </rightDetail>
+          </rightBox>
         </div>
         <p style="text-align: right; margin-bottom: 15px; margin-top: 10px">
           <el-button @click="showRight = false" size="mini">取 消</el-button>
@@ -88,11 +82,15 @@
 </template>
 
 <script>
-import rightDetail from './rightDetail.vue';
+import rightBox from './rightBox';
+import contentBox from './content-box';
+import listBox from './list-box';
 
 export default {
   components: {
-    rightDetail,
+    rightBox,
+    listBox,
+    contentBox,
   },
   data() {
     return {
@@ -102,36 +100,56 @@ export default {
         name: '经理',
         allRight: [
           {
-            name: '用户管理',
+            name: '用户权限管理',
             check: true,
-            allCheck: true,
             children: [
               {
-                name: '增',
-                action: 'add',
+                name: '用户管理',
                 check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                  {
+                    name: '查',
+                    action: 'read',
+                    check: true,
+                  },
+                  {
+                    name: '改',
+                    action: 'update',
+                    check: true,
+                  },
+                ],
               },
               {
-                name: '删',
-                action: 'delete',
+                name: '角色管理',
                 check: true,
-              },
-              {
-                name: '查',
-                action: 'read',
-                check: true,
-              },
-              {
-                name: '改',
-                action: 'update',
-                check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                ],
               },
             ],
           },
           {
             name: '库存管理',
             check: true,
-            allCheck: true,
             children: [
               {
                 name: '入库管理',
@@ -183,6 +201,82 @@ export default {
               },
             ],
           },
+          {
+            name: '分类管理',
+            check: true,
+            children: [
+              {
+                name: '物料管理',
+                check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                ],
+              },
+              {
+                name: '分类管理',
+                check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: '其他管理',
+            check: true,
+            children: [
+              {
+                name: '其他管理1',
+                check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                ],
+              },
+              {
+                name: '其他管理2',
+                check: true,
+                children: [
+                  {
+                    name: '增',
+                    action: 'add',
+                    check: true,
+                  },
+                  {
+                    name: '删',
+                    action: 'delete',
+                    check: true,
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
       currentRole: {
@@ -195,112 +289,24 @@ export default {
   created() {},
   methods: {
     // 情况1：操作最顶级时，以下所有级都受影响（父亲选中，儿子都选中）
-    topClick(name) {
-      // 点击标题时，不处理
+    topClick(name, status) {
       const theRight = this.currentRole.allRight;
-      const myObj = this.lookFindMyObj(name, theRight);
-      const status = myObj.check;
-      console.log('点击标题时，不处理', arguments, myObj);
-
-      // 如果清除，就连儿子也清除
-      if (!status) {
-        this.loopCheck(myObj.children, status);
-        // 全选也去除
-        myObj.allCheck = status;
-      }
-    },
-    topSelectAll(name) {
-      console.log('topSelectAll:', name);
-      const theRight = this.currentRole.allRight;
-      const myObj = this.lookFindMyObj(name, theRight);
-      console.log('rel-fa', myObj);
-      // 如果点了全选
-      myObj.check = myObj.allCheck;
-      this.loopCheck(myObj.children, myObj.allCheck);
-    },
-    titleClickFun(name) {
-      console.log('下级标题：', name);
-
-      const { allRight } = this.currentRole;
-      const myObj = this.lookFindMyObj(name, allRight);
-      console.log('myObj:', myObj);
-
-      const status = myObj.check;
-
-      // 对儿子的处理
-      // 如果清除，就连儿子也清除
-      if (!status) {
-        this.loopCheck(myObj.children, status);
-      }
-
-      // 对逐级父亲的处理
-      let nameArr = [];
-      if (name.includes('_')) {
-        nameArr = name.split('_');
-      } else {
-        nameArr.push(name);
-      }
-      const nameArrFirst = JSON.parse(JSON.stringify(nameArr));
-      this.checkFaByAllSon(nameArrFirst, nameArr, allRight);
-    },
-    checkFaByAllSon(nameArrFirst, nameArr, allRight) {
-      // 循环最近一级父亲 的所有儿子
-      // 父亲状态也要改变
-      const realFa = this.loopFindFa(nameArr, allRight);
-
-      console.log('realFa:', realFa);
-      // 循环最近一级父亲 的所有儿子
-      let sonCheck = false;
-      for (let i = 0; i < realFa.children.length; i++) {
-        if (realFa.children[i].check) {
-          sonCheck = true;
-          break;
-        }
-      }
-      realFa.check = sonCheck;
-
-      // 看看是否还有上一级
-      const indx = nameArrFirst.indexOf(realFa.name);
-      if (indx > 0) {
-        const nArr = nameArrFirst.slice(0, indx);
-        this.checkFaByAllSon(nameArrFirst, nArr, allRight);
-      } else {
-        realFa.allCheck = false;
-        console.log('没有上级了');
-      }
-    },
-    loopFindFa(nameArr, allRight) {
-      console.log('loopFindFa', nameArr, allRight);
-      const oneName = nameArr.shift();
-
-      for (let i = 0; i < allRight.length; i++) {
-        if (allRight[i].name == oneName) {
-          console.log('oneName', i, oneName);
-          if (nameArr.length == 0 || nameArr.length == 1) {
-            console.log('real-fa', nameArr, allRight[i]);
-            return allRight[i];
+      console.error('rb-title:', name, status, theRight);
+      for (let i = 0; i < theRight.length; i++) {
+        if (theRight[i].name == name) {
+          if (!theRight[i].hasOwnProperty('check')) {
+            this.$set(theRight[i], 'check', status);
+          } else {
+            theRight[i].check = status;
           }
-          return this.loopFindFa(nameArr, allRight[i].children);
-        }
-      }
-    },
-    lookFindMyObj(name, allRight) {
-      let nameArr = [];
-      if (name.includes('_')) {
-        nameArr = name.split('_');
-      } else {
-        nameArr.push(name);
-      }
-      const oneName = nameArr.shift();
-
-      for (let i = 0; i < allRight.length; i++) {
-        if (allRight[i].name == oneName) {
-          if (nameArr.length) {
-            return this.lookFindMyObj(nameArr, allRight[i].children);
+          if (theRight[i].children) {
+            this.loopCheck(theRight[i].children, status);
+          } else if (theRight[i].data) {
+            this.loopCheck(theRight[i].data, status);
           }
-          return allRight[i];
         }
       }
+      // console.error('最后结果：',theRight);
     },
     loopCheck(arr, status) {
       for (let i = 0; i < arr.length; i++) {
@@ -317,23 +323,11 @@ export default {
         }
       }
     },
-    oneClick(name, status) {
-      console.log('oneClick', name, status);
-      const { allRight } = this.currentRole;
-      let nameArr = [];
-      if (name.includes('_')) {
-        nameArr = name.split('_');
-      } else {
-        nameArr.push(name);
-      }
-      const nameArrFirst = JSON.parse(JSON.stringify(nameArr));
-      this.checkFaByAllSon(nameArrFirst, nameArr, allRight);
-    },
     // 情况2：不是操作最顶级时，区别对待（规则：有一个儿子选中，父亲就选中；所有儿子都不选中，父亲才不选中）
-    oneClick_old() {
+    sonTitleClick() {
       const rootArr = arguments[0].split('_');
       const status = arguments[1];
-      console.log('rb-oneClick:', rootArr, status);
+      console.error('rb-sonTitleClick:', rootArr, status);
       const allFa = [];
       const arr = this.currentRole.allRight;
       const one = rootArr.shift();
@@ -353,7 +347,7 @@ export default {
             } else {
               arr[i].check = status;
             }
-            // console.log('arr[i].check:',arr[i].name, status);
+            // console.error('arr[i].check:',arr[i].name, status);
             if (rootArr.length) {
               // 如果还没找到最底层，继续循环找下去
               this.loopFindSon(arr[i].children, rootArr, status);
@@ -375,8 +369,8 @@ export default {
         }
       }
       // JSON.stringify(allFa)
-      const myObj = JSON.parse(JSON.stringify(allFa));
-      // console.log('myObj',myObj);
+      const realFa = JSON.parse(JSON.stringify(allFa));
+      // console.error('realFa',realFa);
       if (!status && allFa.length) {
         const needFa = allFa.pop();
 
@@ -397,24 +391,7 @@ export default {
         }
       }
 
-      // console.log('最后结果：',theRight);
-    },
-    selectAllSon(theRight, name, status) {
-      console.log('rb-title:', name, status, theRight);
-      for (let i = 0; i < theRight.length; i++) {
-        if (theRight[i].name == name) {
-          if (!theRight[i].hasOwnProperty('check')) {
-            this.$set(theRight[i], 'check', status);
-          } else {
-            // theRight[i].check = status;
-          }
-          if (theRight[i].children) {
-            this.loopCheck(theRight[i].children, status);
-          } else if (theRight[i].data) {
-            this.loopCheck(theRight[i].data, status);
-          }
-        }
-      }
+      // console.error('最后结果：',theRight);
     },
     loopCheckFa(allFa) {
       const needFa = allFa.pop();
@@ -462,7 +439,7 @@ export default {
             } else {
               arr[i].check = status;
             }
-            // console.log('arr[i].check:',arr[i].name, status);
+            // console.error('arr[i].check:',arr[i].name, status);
             if (rootArr.length) {
               this.loopFindSon(arr[i].children, rootArr, status);
             } else {
@@ -485,7 +462,6 @@ export default {
     },
     editRow(row) {
       this.currentRole = JSON.parse(JSON.stringify(row));
-      console.error('this.currentRole', this.currentRole);
       this.showRight = true;
       this.isAdd = false;
     },
@@ -536,9 +512,7 @@ export default {
       for (let i = 0; i < this.allRole.length; i++) {
         if (this.allRole[i].name == row.name) {
           // 此处要深拷贝一下，否则会污染
-          this.allRole[i].allRight = JSON.parse(
-            JSON.stringify(this.currentRole.allRight),
-          );
+          this.allRole[i].allRight = JSON.parse(JSON.stringify(this.currentRole.allRight));
           break;
         }
       }
@@ -546,7 +520,6 @@ export default {
     },
     addRole() {
       this.currentRole = JSON.parse(JSON.stringify(this.baseRole));
-      console.error('this.currentRole:', this.currentRole);
       this.showRight = true;
       this.isAdd = true;
     },

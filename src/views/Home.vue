@@ -1,9 +1,9 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-04-17 18:35:51
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-06-01 16:58:40
+ * @LastEditTime: 2021-12-24 13:54:16
 -->
 <template>
   <div
@@ -12,7 +12,8 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <HelloWorld msg="列车排班表"/> -->
 
-    <div style="border: 1px solid #ccc; width: 250px; height: 100%; text-align: left; background-color: #2d3a85;">
+    <div style="border: 1px solid #ccc; width: 200px; height: 100%; text-align: left;
+    background-color: #2d3a85;">
       <i class="el-icon-setting" style="color:white; cursor: pointer;" @click="toggle"></i>
       <el-menu
         default-active="1"
@@ -44,7 +45,6 @@
       </el-menu>
 
       </div>
-      
 
       <!-- <el-menu-item index="/instrument">
         <i class="el-icon-setting"></i>
@@ -59,8 +59,7 @@
         <span slot="title">出货订单</span>
       </el-menu-item> -->
 
-
-    <div style="flex: 1; height: 100%">
+    <div style="flex: 1; height: 100%; overflow:auto;">
       <router-view />
     </div>
   </div>
@@ -68,58 +67,60 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import HelloWorld from '@/components/HelloWorld.vue';
 
-import aaa from './abc.json'
+import aaa from './abc.json';
 
-console.error('aaa:',aaa);
+console.error('aaa:', aaa);
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     HelloWorld,
   },
+
   created() {
-    console.log("this", this.$router.options.routes);
+    console.log('this', this.$router.options.routes);
     // 获取 path ='/'
     let rootRoute;
-    let arr = this.$router.options.routes;
+    const arr = this.$router.options.routes;
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].path && arr[i].path == "/") {
+      if (arr[i].path && arr[i].path == '/') {
         rootRoute = arr[i];
         break;
       }
     }
-    let homeChild = rootRoute.children;
-    console.log("homeChild", homeChild);
+    const homeChild = rootRoute.children;
+    console.log('homeChild', homeChild);
 
     // 合并儿子
-    this.homeChild=[];
-    let nameArr=[]
-    for(let i=0;i<homeChild.length;i++){
-      if(homeChild[i].meta.faName){
-        if(!nameArr.includes(homeChild[i].meta.faName)){
-          nameArr.push(homeChild[i].meta.faName)
-          let fa = JSON.parse(JSON.stringify(homeChild[i]))
-          fa['children']=[homeChild[i]]
-          this.homeChild.push(fa)
-        }else{
-          let indx = nameArr.indexOf(homeChild[i].meta.faName)
-          this.homeChild[indx].children.push(homeChild[i])
+    this.homeChild = [];
+    const nameArr = [];
+    for (let i = 0; i < homeChild.length; i++) {
+      if (homeChild[i].meta.faName) {
+        if (!nameArr.includes(homeChild[i].meta.faName)) {
+          nameArr.push(homeChild[i].meta.faName);
+          const fa = JSON.parse(JSON.stringify(homeChild[i]));
+          fa.children = [homeChild[i]];
+          this.homeChild.push(fa);
+        } else {
+          const indx = nameArr.indexOf(homeChild[i].meta.faName);
+          this.homeChild[indx].children.push(homeChild[i]);
         }
+      } else if (!nameArr.includes(homeChild[i].name)) {
+        nameArr.push(homeChild[i].name);
+        this.homeChild.push(homeChild[i]);
       }
-      else{
-        if(!nameArr.includes(homeChild[i].name)){
-          nameArr.push(homeChild[i].name)
-          this.homeChild.push(homeChild[i])
-        }
-      }
-      
     }
+  },
+  mounted() {
+    window.onerror = function (e) {
+      console.error('window.onerror:', e);
+    };
   },
   methods: {
     toggle() {
-      this.$i18n.locale = this.$i18n.locale == "zh" ? "en" : "zh";
+      this.$i18n.locale = this.$i18n.locale == 'zh' ? 'en' : 'zh';
     },
   },
 };

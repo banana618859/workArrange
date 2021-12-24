@@ -1,6 +1,5 @@
-
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-05-08 09:10:17
  * @LastEditors: yizheng.yuan
@@ -11,17 +10,17 @@ export default {
     myMsg(theText, theType) {
       this.$message({
         message: theText,
-        type: theType
+        type: theType,
       });
     },
     copyObj(obj) {
-      return JSON.parse(JSON.stringify(obj))
+      return JSON.parse(JSON.stringify(obj));
     },
     // 毫数转格式 【yyyy-MM-dd】
-    formatDate(time, format='yyyy-MM-dd HH:mm:ss') {
+    formatDate(time, format = 'yyyy-MM-dd HH:mm:ss') {
       const t = new Date(time);
       const tf = function (i) { return (i < 10 ? '0' : '') + i; };
-      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, (a) => {
         switch (a) {
           case 'yyyy':
             return tf(t.getFullYear());
@@ -41,7 +40,7 @@ export default {
           case 'ss':
             return tf(t.getSeconds());
           // break;
-        };
+        }
       });
     },
     answerFun(text = '确定删除?') {
@@ -49,13 +48,13 @@ export default {
         this.$confirm(text, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
         }).then(() => {
-          resolve(true)
+          resolve(true);
         }).catch(() => {
-          resolve(false)
-        })
-      })
-    }
-  }
-}
+          resolve(false);
+        });
+      });
+    },
+  },
+};

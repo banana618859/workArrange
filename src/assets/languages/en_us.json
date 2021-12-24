@@ -24,6 +24,8 @@
     "oldManager": "Old management",
     "rightManager": "Right management",
     "otherManager": "Other management",
+    "otherManager2": "Other management2",
+    "otherManager3": "Other management3",
     "compManager": "Component management",
     "operate": "Operate"
   },

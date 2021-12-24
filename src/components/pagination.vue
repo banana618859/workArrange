@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-05-27 19:09:33
  * @LastEditors: yizheng.yuan
@@ -24,50 +24,49 @@
 
 <script>
 export default {
-  props:{
-    count:{
+  props: {
+    count: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
-  data(){
-    return{
-      allPage: []
-    }
+  data() {
+    return {
+      allPage: [],
+    };
   },
-  created(){
-    this.allPage=[];
-    if(this.count>8){
-      for(let i=0;i<4;i++){
-        this.allPage.push(i+1)
+  created() {
+    this.allPage = [];
+    if (this.count > 8) {
+      for (let i = 0; i < 4; i++) {
+        this.allPage.push(i + 1);
       }
       // 加入省略号
-      this.allPage.push('shenlue')
+      this.allPage.push('shenlue');
 
-      for(let i=this.count-4;i<this.count;i++){
-        this.allPage.push(i+1)
-      } 
-      
-    }else{
-      for(let i=0;i<this.count;i++){
-        this.allPage.push(i+1)
-      } 
+      for (let i = this.count - 4; i < this.count; i++) {
+        this.allPage.push(i + 1);
+      }
+    } else {
+      for (let i = 0; i < this.count; i++) {
+        this.allPage.push(i + 1);
+      }
     }
   },
-  methods:{
-    liClick(item){
-      console.error('liClick',item);
-    }
-  }
+  methods: {
+    liClick(item) {
+      console.error('liClick', item);
+    },
+  },
 
-}
+};
 </script>
 
 <style scoped>
   .one li{
     display: inline-block;
     padding: 5px 8px;
-    
+
     margin-left: 10px;
     text-align: center;
     cursor: pointer;

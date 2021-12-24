@@ -3,7 +3,7 @@
  * @Author: yizheng.yuan
  * @Date: 2021-04-19 16:02:57
  * @LastEditors: yizheng.yuan
- * @LastEditTime: 2021-05-06 17:12:50
+ * @LastEditTime: 2021-06-21 17:15:05
 -->
 <template>
   <div>
@@ -14,20 +14,26 @@
     >
       <!-- 权限类型 -->
       <p class="title pd-t2-l10">
+        <span class="fr">
+          <el-checkbox
+          v-model="item.allCheck"
+          @change="topClickAll(item.name)"
+          >全选</el-checkbox>
+        </span>
         <el-checkbox
           v-model="item.check"
-          @change="topClick(item.name, item.check)"
+          @change="topClick(item.name)"
           >{{ item.name }}</el-checkbox>
       </p>
       <div style="border: 1px solid #ccc; overflow: auto; height: 210px">
-        <list-box
+        <list-boxa
           v-if="item.children && item.children[0].children"
           :data="item.children"
           :faName="item.name"
           @clickOne="sonTitleClick"
-          @titleClick="sonTitleClick">
-        </list-box>
-        <content-box v-else :data="item.children" :faName="item.name" ></content-box>
+          @titleClick="titleClickFun">
+        </list-boxa>
+        <content-box v-else :data="item.children" :faName="item.name" @clickOne="sonTitleClick"></content-box>
       </div>
     </div>
   </div>
@@ -35,12 +41,12 @@
 
 <script>
 import contentBox from './content-box';
-import listBox from './list-box';
+import listBoxa from './list-boxa';
 
 export default {
   components: {
     contentBox,
-    listBox,
+    listBoxa,
   },
   props: {
     allRight: {
@@ -50,6 +56,7 @@ export default {
   },
   data() {
     return {
+      isCheckAll: false,
       theRight: [],
     };
   },
@@ -58,8 +65,14 @@ export default {
     topClick() {
       this.$emit('topClick', ...arguments);
     },
+    titleClickFun() {
+      this.$emit('titleClickFun', ...arguments);
+    },
     sonTitleClick() {
-      this.$emit('sonTitleClick', ...arguments);
+      this.$emit('oneClick', ...arguments);
+    },
+    topClickAll() {
+      this.$emit('topClickAll', ...arguments);
     },
   },
 };

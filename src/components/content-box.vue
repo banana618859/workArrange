@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: yizheng.yuan
  * @Date: 2021-04-19 11:54:03
  * @LastEditors: yizheng.yuan
@@ -16,26 +16,25 @@
 <script>
 
 export default {
-  props:{
-    data:{
+  props: {
+    data: {
       type: Array,
-      default: ()=>[]
+      default: () => [],
     },
-    faName:{
+    faName: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  methods:{
-    changeFun(){
-      this.$emit('clickOne', ...arguments)
-    }
+  methods: {
+    changeFun() {
+      this.$emit('clickOne', ...arguments);
+    },
   },
   data() {
-    return{
-      
-    }
-  },
-}
-</script>
+    return {
 
+    };
+  },
+};
+</script>
